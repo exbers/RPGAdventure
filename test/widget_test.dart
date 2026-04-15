@@ -7,7 +7,7 @@ void main() {
   testWidgets('shows the main menu actions', (tester) async {
     await tester.pumpWidget(const GameApp());
 
-    expect(find.text('Project Space O'), findsOneWidget);
+    expect(find.text('RPG Adventure'), findsOneWidget);
     expect(find.text('Нова гра'), findsOneWidget);
     expect(find.text('Продовжити'), findsOneWidget);
     expect(find.text('Налаштування'), findsOneWidget);
@@ -27,12 +27,34 @@ void main() {
     expect(continueButton.onPressed, isNull);
   });
 
-  testWidgets('new game action gives prototype feedback', (tester) async {
+  testWidgets('tapping Нова гра navigates to hero creation screen', (
+    tester,
+  ) async {
     await tester.pumpWidget(const GameApp());
 
     await tester.tap(find.text('Нова гра'));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
-    expect(find.text('Нова кампанія ще не готова.'), findsOneWidget);
+    expect(find.text('Створення героя'), findsOneWidget);
+    // Main menu title should no longer be visible after navigation.
+    expect(find.text('Нова гра'), findsNothing);
+  });
+
+  testWidgets('hero creation screen has a back button to return to main menu', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const GameApp());
+
+    await tester.tap(find.text('Нова гра'));
+    await tester.pumpAndSettle();
+
+    // The AppBar back button should be present.
+    final backButton = find.byTooltip('Back');
+    expect(backButton, findsOneWidget);
+
+    await tester.tap(backButton);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Нова гра'), findsOneWidget);
   });
 }
