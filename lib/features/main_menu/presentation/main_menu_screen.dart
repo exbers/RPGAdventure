@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/presentation/game_action_list.dart';
-import '../../../shared/presentation/game_menu_button.dart';
-import '../../../shared/presentation/game_panel.dart';
-import '../../../shared/presentation/game_screen.dart';
-import '../../../shared/presentation/game_title.dart';
+import '../../../app/app_routes.dart';
+import '../../../shared/widgets/widgets.dart';
 
 class MainMenuScreen extends StatelessWidget {
   const MainMenuScreen({super.key});
@@ -19,8 +16,8 @@ class MainMenuScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 24),
           const GameTitle(
-            title: 'Project Space O',
-            subtitle: 'Текстова стратегія про накази, ресурси і наслідки.',
+            title: 'RPG Adventure',
+            subtitle: 'Текстова рольова гра про вибір, ресурси і наслідки.',
           ),
           const SizedBox(height: 32),
           GamePanel(
@@ -39,7 +36,7 @@ class MainMenuScreen extends StatelessWidget {
                 icon: Icons.play_arrow_rounded,
                 isPrimary: true,
                 onPressed: () =>
-                    _showMessage(context, 'Нова кампанія ще не готова.'),
+                    Navigator.pushNamed(context, AppRoutes.heroCreation),
               ),
               const GameMenuButton(
                 label: 'Продовжити',
@@ -49,17 +46,15 @@ class MainMenuScreen extends StatelessWidget {
               GameMenuButton(
                 label: 'Налаштування',
                 icon: Icons.tune_rounded,
-                onPressed: () => _showMessage(
-                  context,
-                  'Налаштування будуть додані пізніше.',
-                ),
+                onPressed: () =>
+                    Navigator.pushNamed(context, AppRoutes.settings),
               ),
               GameMenuButton(
                 label: 'Про гру',
                 icon: Icons.info_outline_rounded,
                 onPressed: () => _showMessage(
                   context,
-                  'Project Space O: ранній прототип текстової стратегії.',
+                  'RPG Adventure: ранній прототип текстової рольової гри.',
                 ),
               ),
             ],
